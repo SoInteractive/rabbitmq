@@ -1,12 +1,22 @@
 ---
-- name: restart rabbitmq
-  systemd:
-    daemon_reload: yes
+- name: restart rabbitmq-server service
+  service:
     name: rabbitmq-server
     state: restarted
 
-- name: restart rabbitmq_exporter
-  systemd:
-    daemon_reload: yes
+- name: restart rabbitmq
+  tags: skip_ansible_lint
+  shell: systemctl daemon-reload
+  notify:
+    - restart rabbitmq-server service
+
+- name: restart rabbitmq_exporter service
+  service:
     name: rabbitmq_exporter
     state: restarted
+
+- name: restart rabbitmq_exporter
+  shell: systemctl daemon-reload
+  tags: skip_ansible_lint
+  notify:
+    - restart rabbitmq_exporter service

@@ -36,7 +36,7 @@
     - restart rabbitmq_exporter
 
 - name: Ensure Rabbitmq Exporter is started and enabled on boot
-  systemd:
+  service:
     name: rabbitmq_exporter
     state: started
     enabled: yes
